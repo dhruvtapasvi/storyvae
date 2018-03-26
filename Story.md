@@ -81,7 +81,6 @@ Batch normalised, and relu activated \
 No fancy initialisation, but training was relatively stable anyway \
 Error: MSE, not sure that BXE makes sense for the PCA components \
 Results perhaps slightly worse than for 128 latent dimensions \
-AN INTERESTING ISSUE IS THAT WHEN I TRY TO RESUME TRAINING WITH THE OLD WEIGHTS, IT SEEMS LIKE ALL TRAINING PROGRESS IS LOST; THE TRAINING RESTARTS WITH A SEEMINGLY HIGH ERROR. \ 
 See folder "PCAVaeTiny"
 
 ### PCA Vae Fitted Variance
@@ -106,19 +105,23 @@ batch normalisation, relu activated \
 no fancy initialisation \
 error: MSE with fitted variance \
 See folder "PCAVaeFittedVarianceTiny" \
+AN INTERESTING ISSUE IS THAT WHEN I TRY TO RESUME TRAINING WITH THE OLD WEIGHTS, IT SEEMS LIKE ALL TRAINING PROGRESS IS LOST; THE TRAINING RESTARTS WITH A SEEMINGLY HIGH ERROR. \ 
 Results not great at all still
+
+### PCA Vae Fitted Variance (small)
+Maybe fitted variance would work on a smallish network: \
+number of pca components: 500 \
+intermediate dimension: 2048 \
+number of intermediate layers: 1 \
+latent dimension: 128 \
+batch normalisation, relu activated \
+no fancy initialisation \
+error: MSE with fitted variance \
+Unable to train this one properly due to NaN problems. Error seems to be decreasing normally, until it gets to about -650 to -700, then the KL-Divergence just explodes massively.\ 
 
 ## Ideas for improvement
 
 ### U-net connections
 As usual, have a 2-phase contracting and expanding convolutional network. The idea is to append the convolutional volumes from the contraction phase to the relevant volumes from the expansion phase
 
-## Problems
-
-### VAE has poor fit
-Even training dataset is not well-reproduced.
-Trying to improve capacity with various architectures
-
-### Unstable training, often settled in suboptimal points, training loss bounced around
-Use batch normalisation and better weights initialisation
-Might want to try L2 regularisation as well
+### KL Divergence epsilon trick
