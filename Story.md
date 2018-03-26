@@ -44,6 +44,7 @@ Batch normalised, and relu activated \
 No fancy initialisation, but training was relatively stable anyway \
 Error: MSE, not sure that BXE makes sense for the PCA components \
 Train images look better than before, but test are pretty bad and random sampling leads to nonsense. \
+EDIT: random sampling leads to nonsense because of a mistak I made in the code. Random sampling in reality gives some structure but not a very nice structure: see small Pca Vae with no iftted variance random sampling
 QUESTIONS: Activation: none on the final layer, if pca components are all -1 to 1 then maybe tanh makes sense? Maybe training for more epochs? Maybe a higher capacity network? \
 See folder "PCAVae"
 
