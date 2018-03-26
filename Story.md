@@ -113,11 +113,13 @@ Maybe fitted variance would work on a smallish network: \
 number of pca components: 500 \
 intermediate dimension: 2048 \
 number of intermediate layers: 1 \
-latent dimension: 128 \
+latent dimension: 64 \
 batch normalisation, relu activated \
 no fancy initialisation \
 error: MSE with fitted variance \
-Unable to train this one properly due to NaN problems. Error seems to be decreasing normally, until it gets to about -650 to -700, then the KL-Divergence just explodes massively.\ 
+Unable to train this one properly due to NaN problems. Error seems to be decreasing normally, until it gets to about -650 to -700, then the KL-Divergence just explodes massively. So  I trained for 50 epochs before it exploded.\
+The odd resuming training problem also recurred. I've got the training history evidence as well for that.\
+See folder "PCAVaeFittedVarianceSmall" 
 
 ## Ideas for improvement
 
@@ -125,3 +127,11 @@ Unable to train this one properly due to NaN problems. Error seems to be decreas
 As usual, have a 2-phase contracting and expanding convolutional network. The idea is to append the convolutional volumes from the contraction phase to the relevant volumes from the expansion phase
 
 ### KL Divergence epsilon trick
+Add epsilon to the variance of q(z) to make sure that it doesn't blow up. So I no longer model the variance in log terms but in linear terms with an added epsilon (in the same way that brian keng models the output variance). All those trainings which use this trick will be marked as such.
+
+In most cases, this was not needed in the end as good initialisation of weights and batch normalisation limited greatly the instability in training. I tried it for PCA Vae Fitted Variance (small) to try and remove the problems with instability, but it didn't help me at all, in fact I saw more nans. So I reverted those changes
+
+### Questions to answer
+
+## PCA fitted vs unfitted variance
+Why does fitted variance give me worse results? Surely the results should be at least as good (as the network could easily just set all variances = 1/whatever constant my network is using right now).
